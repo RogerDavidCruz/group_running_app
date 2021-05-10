@@ -60,6 +60,20 @@ module.exports = {
       console.log(err);
     }
   },
+  updatePost: async (req, res,) => {
+    try{
+      await Post.findOneAndUpdate({
+        time: re.body.time,
+        day: req.body.day,
+        location: req.body.location,
+      });
+      console.log("Post has been added!");
+      res.redirect("/profile");
+  } catch (err) {
+    console.log(err, 'Sorry something went wrong');
+  }
+},
+
   deletePost: async (req, res) => {
     try {
       // Find post by id
