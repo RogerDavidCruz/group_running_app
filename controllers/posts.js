@@ -1,6 +1,7 @@
 const cloudinary = require("../middleware/cloudinary");
 const Post = require("../models/Post");
 
+
 module.exports = {
   getProfile: async (req, res) => {
     try {
@@ -20,8 +21,9 @@ module.exports = {
   },
   getPost: async (req, res) => {
     try {
+      console.log(req.query);
       const post = await Post.findById(req.params.id);
-      res.render("post.ejs", { post: post, user: req.user });
+      res.render("post.ejs", { post: post, user: req.user, edit: req.query.edit });
     } catch (err) {
       console.log(err);
     }
@@ -61,18 +63,21 @@ module.exports = {
     }
   },
   updatePost: async (req, res,) => {
-    try{
+    try{ console.log(req);
       await Post.findOneAndUpdate({
-        time: re.body.time,
+        _id: req.params.id},
+        {
+        time: req.body.time,
         day: req.body.day,
         location: req.body.location,
       });
-      console.log("Post has been added!");
-      res.redirect("/profile");
+      console.log("Update the time, day or location ");
+      res.redirect(`/post/${req.params.id}`);
   } catch (err) {
     console.log(err, 'Sorry something went wrong');
   }
 },
+
 
   deletePost: async (req, res) => {
     try {

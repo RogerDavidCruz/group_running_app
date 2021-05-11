@@ -28,6 +28,37 @@
       <p>Date: <%= post.day %></p>
       <p>Location: <%= post.location %></p>
     </div>
+    <div class="mt-5">
+      <% if(edit === 'true') {%>
+        <a href="/post/<%= post.id %>?edit=false">
+       <% } else { %>
+        <a href="/post/<%= post.id %>?edit=true">
+      <% } %>
+        <button type="button" class="btn btn-primary" >Edit</button></a>
+    </div>
+    <% if(edit === 'true'){%>
+      <form action="/post/updatePost/<%= post.id %>?_method=PUT" enctype="multipart/form-data" method="POST"> 
+        <div class="mb-3">
+          <label for="time" class="form-label">Time</label>
+          <input type="time" id="time" name="time"
+                 min="00:00" max="24:00" required>     
+        </div>
+    
+        <div class="mb-3">
+          <label for="day" class="form-label">Day</label>
+          <input type="date" id="day" name="day"
+                 value="2021-05-10"
+                 min="2021-01-01" max="2021-12-31">
+        </div>
+    
+        <div class="mb-3">
+          <label for="location" class="form-label">Location</label>
+          <textarea type="text" class="form-control" id="location" name="location"></textarea>
+        </div>
+        <button type="submit" class="btn btn-primary" value="Upload">Submit</button>
+      </form>
+    <% } %>
+    
     <div class="col-6 mt-5">
       <a class="btn btn-primary" href="/profile">Return to Profile</a>
       <a class="btn btn-primary" href="/feed">Return to Feed</a>
