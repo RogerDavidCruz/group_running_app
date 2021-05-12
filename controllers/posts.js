@@ -29,7 +29,7 @@ module.exports = {
     }
   },
   createPost: async (req, res) => {
-    try {
+    try { console.log(req.body, "createPost");
       // Upload image to cloudinary
       const result = await cloudinary.uploader.upload(req.file.path);
 
@@ -49,7 +49,7 @@ module.exports = {
     }
   },
   likePost: async (req, res) => {
-    try {
+    try { console.log(req.body, "likePost");
       await Post.findOneAndUpdate(
         { _id: req.params.id },
         {
@@ -63,13 +63,15 @@ module.exports = {
     }
   },
   updatePost: async (req, res,) => {
-    try{ console.log(req);
-      await Post.findOneAndUpdate({
+    try{ console.log(req.body, 'updatePost');
+       await Post.findOneAndUpdate({
         _id: req.params.id},
         {
-        time: req.body.time,
-        day: req.body.day,
-        location: req.body.location,
+          $set:
+          {time: '12:00',
+          day: req.body.day,
+          location: req.body.location
+          },
       });
       console.log("Update the time, day or location ");
       res.redirect(`/post/${req.params.id}`);
