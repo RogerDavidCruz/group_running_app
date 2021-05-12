@@ -29,14 +29,6 @@
       <p>Location: <%= post.location %></p>
     </div>
     <div class="mt-5">
-      <% if(edit === 'true') {%>
-        <a href="/post/<%= post.id %>?edit=false">
-       <% } else { %>
-        <a href="/post/<%= post.id %>?edit=true">
-      <% } %>
-        <button type="button" class="btn btn-primary" >Edit</button></a>
-    </div>
-    <% if(edit === 'true'){%>
       <form action="/post/updatePost/<%= post.id %>?_method=PUT" enctype="multipart/form-data" method="POST"> 
         <div class="mb-3">
           <label for="time" class="form-label">Time</label>
@@ -55,15 +47,15 @@
           <label for="location" class="form-label">Location</label>
           <textarea type="text" class="form-control" id="location" name="location"></textarea>
         </div>
-        <button type="submit" class="btn btn-primary" value="Upload">Submit</button>
+        <button type="submit" class="btn btn-primary" value="updatePost">Submit</button>
       </form>
-    <% } %>
+    </div>
     
     <div class="col-6 mt-5">
       <a class="btn btn-primary" href="/profile">Return to Profile</a>
       <a class="btn btn-primary" href="/feed">Return to Feed</a>
     </div>
-  </div>
+  
 </div>
 
 <%- include('partials/footer') -%>
