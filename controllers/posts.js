@@ -21,7 +21,7 @@ module.exports = {
   },
   getPost: async (req, res) => {
     try {
-      console.log(req.query);
+      console.log(req.query, 'req.query');
       const post = await Post.findById(req.params.id);
       res.render("post.ejs", { post: post, user: req.user, edit: req.query.edit });
     } catch (err) {
@@ -49,11 +49,20 @@ module.exports = {
     }
   },
   likePost: async (req, res) => {
-    try { console.log(req.body, "likePost");
-      await Post.findOneAndUpdate(
+    const post = await Post.findById(req.params.id);
+    console.log(post, 'all the former post details, post.time')
+
+    const newStats = await req.body
+    console.log(newStats, 'newStats')
+
+    try {
+      await Post.updateMany(
         { _id: req.params.id },
         {
-          $inc: { likes: 1 },
+          $set: { time: '10:00', 
+                  day: '2021-05-20',
+                  location: 'Cambridge'
+                }
         }
       );
       console.log("Likes +1");
@@ -63,17 +72,18 @@ module.exports = {
     }
   },
   updatePost: async (req, res,) => {
-    try{ console.log(req.body, 'updatePost');
-       await Post.findOneAndUpdate({
-        _id: req.params.id},
+    console.log(req.params, 'dog')
+    try{
+      await Post.updateMany(
+        { _id: req.params.id },
         {
-          $set:
-          {time: '12:00',
-          day: req.body.day,
-          location: req.body.location
-          },
-      });
-      console.log("Update the time, day or location ");
+          $set: { time: '11:00', 
+                  day: '2021-05-21',
+                  location: 'Boston'
+                }
+        }
+      )
+      console.log("Update the time, day or location");
       res.redirect(`/post/${req.params.id}`);
   } catch (err) {
     console.log(err, 'Sorry something went wrong');
